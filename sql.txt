@@ -1,0 +1,10 @@
+USE test_aatc;
+SET sql_safe_updates = 0;
+UPDATE aatc_idea t1,aatc_user t2 SET t1.author_name = t2.display_name WHERE t1.author_id = t2.employee_id;
+UPDATE aatc_idea t1,aatc_user t2 SET t1.author_mail = t2.email WHERE t1.author_id = t2.employee_id;
+UPDATE aatc_idea t1,aatc_user t2 SET t1.manager_line = t2.manager_line WHERE t1.author_id = t2.employee_id;
+
+SELECT * FROM `aatc_idea` WHERE FIND_IN_SET(id,'2,3,5');
+//批量跟新 clt leader
+UPDATE test_aatc.aatc_idea SET clt_leader='Dimple Jian' WHERE id IN ('214', '246');
+SELECT * FROM test_aatc.aatc_idea Where id IN ('214', '246');
