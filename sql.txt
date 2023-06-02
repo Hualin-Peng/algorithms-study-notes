@@ -8,3 +8,28 @@ SELECT * FROM `aatc_idea` WHERE FIND_IN_SET(id,'2,3,5');
 //批量跟新 clt leader
 UPDATE test_aatc.aatc_idea SET clt_leader='Dimple Jian' WHERE id IN ('214', '246');
 SELECT * FROM test_aatc.aatc_idea Where id IN ('214', '246');
+===================================================================================================
+#! /bin/bash
+
+mysql_user="admin"
+mysql_password="Admin@1234"
+mysql_host="localhost"
+mysql_port="3306"
+mysql_charset="utf8mb4"
+mysql_shema="test_aatc"
+backup_location=/home/scbu/resarch/mysql_backup
+
+backup_time=`date +%Y%m%d%H%M`
+backup_dir=$backup_location
+
+mysqldump -h$mysql_host -P$mysql_port -u$mysql_user -p$mysql_password -B $mysql_shema> $backup_dir/$mysql_shema-$backup_time.sql
+
+flag=`echo $?`
+if [ $flag == "0" ];then
+    echo "database $mysql_shema success backup to $backup_dir/$mysql_shema-$backup_time.sql"
+else
+    echo "database $mysql_shema backup fail!"
+fi
+===============
+30 2 * * * /bin/bash /home/scbu/resarch/mysql_backup.sh
+===============
